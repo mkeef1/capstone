@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('game')
-    .controller('MenuCtrl', ['$rootScope', '$scope', '$state', function($rootScope, $scope, $state){
+    .controller('MenuCtrl', ['$scope', function($scope){
       $scope.title = 'Menu Page';
     }]);
 })();
