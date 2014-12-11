@@ -1,7 +1,6 @@
 var game = new Phaser.Game(900, 600, Phaser.AUTO, 'capstone', { preload: preload, create: create, update:update});
 
 function preload(){
-  game.load.image('quas', '/img/quas.gif');
   game.load.spritesheet('quasrun', '/img/quasrun.png', 128, 128);
 }
 
