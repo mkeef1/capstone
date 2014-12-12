@@ -52,3 +52,6 @@ function update(){
   }
   player.body.gravity.y = 1000;
 }
+
+game.state.add('menu');
+game.state.add('load');
