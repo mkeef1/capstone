@@ -3,6 +3,6 @@
 
   angular.module('game')
     .controller('MenuCtrl', ['$scope', function($scope){
-      $scope.title = 'Menu Page';
+      $scope.title = 'Adventures of Lord Quas';
     }]);
 })();

@@ -8,7 +8,9 @@
   "dependencies": {
     "connect": "^3.3.0",
     "grunt": "^0.4.5",
+    "grunt-browserify": "^3.2.1",
     "grunt-cli": "^0.1.13",
+    "grunt-commonjs": "^0.2.0-rc7",
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-copy": "^0.7.0",
     "grunt-contrib-jade": "^0.13.0",
