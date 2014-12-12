@@ -30,12 +30,9 @@ var game = new Phaser.Game(900, 600, Phaser.CANVAS, 'capstone'),
   create: function(){
     game.physics.startSystem(Phaser.Physics.ARCADE);
     map = game.add.tilemap('map');
-    //layer = map.createLayer('Background');
-    //layer = map.createLayer('Objects');
     map.addTilesetImage('hyptosis_tile-art-batch-3', 'set2');
     map.addTilesetImage('hyptosis_tile-art-batch-1', 'set1');
 
-    //objects.resizeWorld();
     background = map.createLayer('Background');
     objects = map.createLayer('objects');
     background.resizeWorld();
