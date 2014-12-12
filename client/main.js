@@ -5,10 +5,10 @@ var game = new Phaser.Game(900, 600, Phaser.CANVAS, 'capstone'),
 
   menuState = {
   preload: function(){
-    game.load.image('menu2', '/assets/menu2.jpg');
+    game.load.image('menu', '/assets/menu2.jpg');
   },
   create: function(){
-    game.add.sprite(0, 0, 'menu2');
+    game.add.sprite(0, 0, 'menu');
     newGameBtn = game.add.text(game.world.centerX, game.world.centerY, 'New game');
     newGameBtn.inputEnabled = true;
   // Add input handlers
