@@ -45,10 +45,13 @@
           background.resizeWorld();
           player = game.add.sprite(100, 600, 'quasrun');
           game.physics.arcade.enable(player);
+          player.anchor.setTo(0.5, 0.5);
+          player.body.setSize(64, 64);
+          player.scale.setTo(1, 1);
           cursors = game.input.keyboard.createCursorKeys();
           game.camera.follow(player);
           player.body.collideWorldBounds = true;
-          map.setCollision(1724, true, 'objects');
+          map.setCollision(1694, true, 'objects');
           player.animations.add('left', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 10, true);
         },
         update: function(){
@@ -70,11 +73,15 @@
             player.body.velocity.y = -350;
           }
           player.body.gravity.y = 1000;
+        },
+
+        render: function(){
+          game.debug.body(player);
         }
       };
 
       game.state.add('menu', menuState);
       game.state.add('game', gameState);
-      game.state.start('menu');
+      game.state.start('game');
     }]);
 })();
