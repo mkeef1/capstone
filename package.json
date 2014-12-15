@@ -21,6 +21,7 @@
     "grunt-shell": "^1.1.1",
     "jshint-stylish": "^1.0.0",
     "morgan": "^1.4.0",
+    "phaser": "^2.2.1",
     "serve-static": "^1.7.0"
   }
 }
