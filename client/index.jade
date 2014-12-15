@@ -12,6 +12,7 @@ html.no-js(ng-app='game', lang='en')
     .row
       .small-12.columns
         div(ui-view)
+        div#game
 
     script(src='/vendor/bower_components/angular/angular.min.js')
     script(src='/vendor/jquery/dist/jquery.min.js')
@@ -19,8 +20,17 @@ html.no-js(ng-app='game', lang='en')
     script(src='/vendor/bower_components/angular-ui-router/release/angular-ui-router.min.js')
     script(src='/phaser-arcade-physics.min.js')
     script(src='/index.js')
+    script(src='/boot/boot.js')
     script(src='/menu/menu_ctrl.js')
-    script(src='/game/game.js')
+    //script(src='/game/game.js')
+    script(type='text/javascript',
+        window.onload = function(){
+            var game = new Phaser.Game(900, 600, Phaser.CANVAS, 'game');
+            game.state.add('boot', Game.boot);
+            game.state.add('menu', Game.menu);
+            game.state.add('game', Game.game);
+            game.state.start('boot')
+        })
 
     script.
       $(document).foundation();

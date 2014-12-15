@@ -6,7 +6,7 @@
       $urlRouterProvider.otherwise('/menu');
 
       $stateProvider
-        //.state('home',         {url:'/',         templateUrl:'/home/home.html'})
+        .state('load',         {url:'',          abstract:true,                 controller:'BootCtrl'})
         .state('menu',         {url:'/menu',     templateUrl:'/menu/menu.html', controller:'MenuCtrl'})
         .state('game',         {url:'/game',     templateUrl:'/game/game.html', controller:'GameCtrl'});
       });
