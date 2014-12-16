@@ -1,3 +1,4 @@
+/* global Game */
 (function(){
   'use strict';
 
@@ -7,6 +8,8 @@
 
   Game.play = function(){
   };
+
+var game, map, background, objects, player, cursors;
 
   Game.play.prototype = {
     preload: function(){

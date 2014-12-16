@@ -8,7 +8,7 @@ var Game = {},
 Game.menu = function(){
 };
 
-Game.menu.prototype = function(){
+Game.menu.prototype = {
   preload: function(){
     this.game.load.image('menu', '/assets/menu2.jpg');
   },

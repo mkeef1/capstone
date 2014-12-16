@@ -25,7 +25,7 @@
   var game;
 
   function initPhaser(){
-    game = new Phaser.Game(900, 500, Phaser.CANVAS, 'game');
+    game = new Phaser.Game(900, 600, Phaser.CANVAS, 'game');
 
     game.state.add('menu', menuState);
     game.state.add('game', gameState);
