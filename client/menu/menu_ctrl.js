@@ -1,13 +1,16 @@
 (function(){
   'use strict';
 
+
   angular.module('game')
     .controller('MenuCtrl', ['$scope', function($scope){
       $scope.title = 'Adventures of Lord Quas';
-      var Game = {},
-          newGameBtn;
+      var Game, newGameBtn;
 
-      Game.MainMenu = {
+      Game.mainMenu = function(game){
+      };
+
+      Game.mainMenu.prototype = {
         create: function(){
           this.add.sprite(0, 0, 'menu');
           newGameBtn = this.add.text(this.world.centerX, this.world.centerY, 'New game');

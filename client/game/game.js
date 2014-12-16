@@ -5,7 +5,7 @@
     .controller('GameCtrl', ['$rootScope', '$scope', '$state', function($rootScope, $scope, $state){
       $scope.title = 'Game Page';
 
-      var game = new Phaser.Game(900, 500, Phaser.CANVAS, 'capstone'),
+      var game = new Phaser.Game(900, 500, Phaser.CANVAS, 'game'),
         player, cursors, map, background, objects, newGameBtn, gameState,
 
         menuState = {
@@ -82,6 +82,6 @@
 
       game.state.add('menu', menuState);
       game.state.add('game', gameState);
-      game.state.start('game');
+      game.state.start('menu');
     }]);
 })();
