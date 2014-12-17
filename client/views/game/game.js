@@ -9,5 +9,12 @@
       window.game.state.add('menu', Game.menu);
       window.game.state.add('game', Game.play);
       window.game.state.start('menu');
+
+      $scope.logout = function(){
+        User.logout().then(function(){
+          $rootScope.rootuser = null;
+          $state.go('login');
+        });
+      };
     }]);
 })();

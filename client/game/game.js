@@ -5,7 +5,7 @@
   Game.play = function(){
   };
 
-  var game, map, background, objects, player, cursors;
+  var map, background, objects, player, cursors;
 
   Game.play.prototype = {
     preload: function(){
