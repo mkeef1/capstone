@@ -1,5 +1,3 @@
-(function(){
-
 'use strict';
 
 var Game = {},
@@ -21,8 +19,6 @@ Game.menu.prototype = {
   }
 };
 
-  function startNewgame(){
-    this.game.state.start('game');
-  }
-
-})();
+function startNewgame(){
+  this.game.state.start('game');
+}

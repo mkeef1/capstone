@@ -17,7 +17,7 @@
         }else{
           User.login($scope.user).then(function(response){
             $rootScope.rootuser = response.data;
-            $state.go('menu');
+            $state.go('game');
           }, function(){
             $scope.user = {};
           });
