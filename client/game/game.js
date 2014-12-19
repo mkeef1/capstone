@@ -5,7 +5,7 @@
   Game.play = function(){
   };
 
-  var map, background, objects, player, cursors;
+  var map, background, objects, player, cursors, trees;
 
   Game.play.prototype = {
     preload: function(){
@@ -22,7 +22,8 @@
 
       background = map.createLayer('Background');
       objects = map.createLayer('objects');
-      background.resizeWorld();
+      trees = map.createLayer('trees');
+      trees.resizeWorld();
       player = this.game.add.sprite(100, 600, 'quasrun');
       this.game.physics.arcade.enable(player);
       player.anchor.setTo(0.5, 0.5);
@@ -31,7 +32,7 @@
       cursors = this.game.input.keyboard.createCursorKeys();
       this.game.camera.follow(player);
       player.body.collideWorldBounds = true;
-      map.setCollision(1694, true, 'objects');
+      map.setCollisionByExclusion([], true, 'objects');
       player.animations.add('left', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 10, true);
     },
     update: function(){
