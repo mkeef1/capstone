@@ -5,7 +5,7 @@
   Game.play = function(){
   };
 
-  var map, background, objects, player, cursors, trees;
+  var map, background, objects, player, cursors, trees, forest;
 
   Game.play.prototype = {
     preload: function(){
@@ -13,6 +13,7 @@
       this.game.load.tilemap('map', '/assets/capstone.json', null, Phaser.Tilemap.TILED_JSON);
       this.game.load.image('set1', '/assets/hyptosis_tile-art-batch-1.png');
       this.game.load.image('set2', '/assets/hyptosis_tile-art-batch-3.png');
+      this.game.load.image('forest', '/assets/forestBackground.jpg');
     },
     create: function(){
       this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -20,6 +21,8 @@
       map.addTilesetImage('hyptosis_tile-art-batch-3', 'set2');
       map.addTilesetImage('hyptosis_tile-art-batch-1', 'set1');
 
+      forest = this.game.add.image(0, 200, 'forest');
+      forest.scale.setTo(1.3, 1.8);
       background = map.createLayer('Background');
       objects = map.createLayer('objects');
       trees = map.createLayer('trees');
