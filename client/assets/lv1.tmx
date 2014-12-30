@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="150" height="20" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="minicular" tilewidth="32" tileheight="32">
+  <image source="minicular.png" width="256" height="256"/>
+ </tileset>
+ <layer name="Ground" width="150" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztwzENAAAMA6DWv+lq2LEPEhIAAAAAAAAAAAAAgJvqwwHf1ACX
+  </data>
+ </layer>
+ <imagelayer name="farBackground"/>
+ <imagelayer name="nearBackground"/>
+</map>

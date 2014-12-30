@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="30" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="hyptosis_tile-art-batch-1" tilewidth="32" tileheight="32">
+  <image source="hyptosis_tile-art-batch-1.png" width="960" height="960"/>
+ </tileset>
+ <tileset firstgid="901" name="hyptosis_tile-art-batch-3" tilewidth="32" tileheight="32">
+  <image source="hyptosis_tile-art-batch-3.png" width="960" height="960"/>
+ </tileset>
+ <layer name="Background" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztw0ENAAAIBKB72T+Q4azhFDYSAAAAAIBfum5klwFnsiXl
+  </data>
+ </layer>
+ <layer name="objects" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztw1ENgDAQBbD7wr+BMSEMITAzPBsX2qRVAAAAAAD/Mo6qs/mZV67m73zybX7nBwobca0=
+  </data>
+ </layer>
+ <layer name="trees" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztkcsNglAQRQck7rUD3fvpQDdqFboBC9Em/PQh2IANqNCAFfgpwGt8L84CITFgNLknOSGQmXszQYQQQgghhBBCCCHkd1g4Iku4gmvnf/s2yAphBLdfuKOMvj1yDvAIY5iUfMcnfQ1PpOnlz52RdYFXeCvgjrzetL5d5fmMqvhHcID9IRzBHuybPB9zgZnVM5qaK1J3X+82O2/Xdlt0b1aW7juZbzFyEuhjP4BTOIYTkzfD3NxmqZkHLWS1YQd21R02O2tXd1t077ustD5CiuYOus02dg==
+  </data>
+ </layer>
+ <layer name="platforms" width="50" height="30" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T20IX6AAAAAAAIDXABdwAAE=
+  </data>
+ </layer>
+</map>
