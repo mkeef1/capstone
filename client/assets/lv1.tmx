@@ -3,11 +3,44 @@
  <tileset firstgid="1" name="minicular" tilewidth="32" tileheight="32">
   <image source="minicular.png" width="256" height="256"/>
  </tileset>
+ <tileset firstgid="65" name="background" tilewidth="149" tileheight="136">
+  <tile id="0">
+   <image width="149" height="136" source="../../../../game design/Sprites/ilmenskie_png/liana_5.png"/>
+  </tile>
+ </tileset>
+ <tileset firstgid="66" name="record-set" tilewidth="32" tileheight="32">
+  <image source="record-set.jpg" width="96" height="64"/>
+ </tileset>
+ <tileset firstgid="72" name="spikes" tilewidth="32" tileheight="32">
+  <tile id="0">
+   <image width="32" height="32" source="SteelspikeUp.png"/>
+  </tile>
+ </tileset>
+ <objectgroup name="Spikes">
+  <object gid="72" x="864" y="608"/>
+  <object gid="72" x="896" y="608"/>
+  <object gid="72" x="928" y="608"/>
+ </objectgroup>
+ <objectgroup name="Record">
+  <object gid="66" x="480" y="576"/>
+  <object gid="66" x="352" y="576"/>
+  <object gid="66" x="608" y="576"/>
+  <object gid="66" x="224" y="576"/>
+  <object gid="66" x="288" y="512"/>
+  <object gid="66" x="416" y="512"/>
+  <object gid="66" x="544" y="512"/>
+  <object gid="66" x="864" y="512"/>
+  <object gid="66" x="896" y="512"/>
+  <object gid="66" x="928" y="512"/>
+ </objectgroup>
  <layer name="Ground" width="150" height="20">
   <data encoding="base64" compression="zlib">
-   eJztwzENAAAMA6DWv+lq2LEPEhIAAAAAAAAAAAAAgJvqwwHf1ACX
+   eJztziESgDAMRcEGiyoOjsD9D0hERWVNi+juzDP5JqUAAAAAAAAAAAAAO6nZNXCDEWcWrSc7uu3O3j+eYomQJvQBd6wBSQ==
   </data>
  </layer>
- <imagelayer name="farBackground"/>
- <imagelayer name="nearBackground"/>
+ <layer name="Background" width="150" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T20MH6AAAAAAAAAAAAAAAOBvLuAAAQ==
+  </data>
+ </layer>
 </map>
