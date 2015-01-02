@@ -28,7 +28,7 @@
       player = this.game.add.sprite(100, 550, 'quasrun');
       this.game.physics.arcade.enable(player);
       player.anchor.setTo(0.5, 0.5);
-      player.body.setSize(37, 73);
+      player.body.setSize(30, 73);
       player.scale.setTo(1, 1);
       cursors = this.game.input.keyboard.createCursorKeys();
       this.game.camera.follow(player);
@@ -50,20 +50,22 @@
     update: function(){
       this.game.physics.arcade.collide(player, ground);
       player.body.velocity.x = 0;
-      player.animations.play('left');
+      // player.animations.play('left');
       if(cursors.left.isDown){
         player.body.velocity.x = -150;
         player.animations.play('left');
+        player.scale.x = -1;
       }
       else if(cursors.right.isDown){
         player.body.velocity.x = 150;
         player.animations.play('left');
+        player.scale.x = 1;
       }else{
         player.animations.stop();
         player.frame = 11;
       }
       if(cursors.up.isDown && player.body.onFloor()){
-        player.body.velocity.y = -350;
+        player.body.velocity.y = -400;
       }
       player.body.gravity.y = 1000;
     },
