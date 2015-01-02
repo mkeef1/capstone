@@ -5,7 +5,7 @@
   Game.play = function(){
   };
 
-  var map, player, cursors, sky, ground, records, spikes;
+  var map, player, cursors, sky, ground, records, spikes, score;
 
   Game.play.prototype = {
     preload: function(){
@@ -46,11 +46,13 @@
       map.createFromObjects('Spikes', 72, 'spike', 0, true, false, spikes);
       records.callAll('animations.add', 'animations', 'spin', [0, 1, 2, 3, 4, 5], 2, true);
       records.callAll('animations.play', 'animations', 'spin');
+
+      score = 0;
     },
     update: function(){
       this.game.physics.arcade.collide(player, ground);
+      this.game.physics.arcade.overlap(player, records, this.collectRecord, null, this);
       player.body.velocity.x = 0;
-      // player.animations.play('left');
       if(cursors.left.isDown){
         player.body.velocity.x = -150;
         player.animations.play('left');
@@ -68,6 +70,13 @@
         player.body.velocity.y = -400;
       }
       player.body.gravity.y = 1000;
+    },
+
+    collectRecord: function(player, record){
+      record.kill();
+      score += 10;
+      console.log('score', score);
+
     },
 
     render: function(){
