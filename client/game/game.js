@@ -5,7 +5,7 @@
   Game.play = function(){
   };
 
-  var map, player, cursors, sky, ground, records, spikes, score, spikeTraps;
+  var map, player, cursors, sky, ground, records, spikes, score, spikeTraps, platforms;
 
   Game.play.prototype = {
     preload: function(){
@@ -25,10 +25,11 @@
       sky.fixedToCamera = true;
       map.setCollisionByExclusion([]);
 
+
       ground = map.createLayer('Ground');
       ground.resizeWorld();
 
-      player = this.game.add.sprite(1200, 550, 'quasrun');
+      player = this.game.add.sprite(2000, 550, 'quasrun');
       this.game.physics.arcade.enable(player);
       player.anchor.setTo(0.5, 0.5);
       player.body.setSize(30, 73);
@@ -40,19 +41,26 @@
 
       cursors = this.game.input.keyboard.createCursorKeys();
 
+      platforms = this.game.add.group();
+      platforms.enableBody = true;
+
       records = this.game.add.group();
+      records.name = 'records';
       records.enableBody = true;
 
       spikes = this.game.add.group();
+      spikes.name = 'spikes';
       spikes.enableBody = true;
 
       spikeTraps = this.game.add.group();
+      spikeTraps.name = 'spikeTraps';
       spikeTraps.enableBody = true;
+
       this.moveTimer = this.game.time.events.loop(1500, this.moveItems, this);
 
 
-      map.createFromObjects('Record', 66, 'record', 0, true, false, records);
-      map.createFromObjects('Spikes', 72, 'spike', 0, true, false, spikes);
+      map.createFromObjects('Record', 65, 'record', 0, true, false, records);
+      map.createFromObjects('Spikes', 71, 'spike', 0, true, false, spikes);
       map.createFromObjects('SpikeTrap', 64, 'spikeTrap', 0, true, false, spikeTraps);
 
 
@@ -60,12 +68,14 @@
       records.callAll('animations.play', 'animations', 'spin');
 
       score = 0;
-
     },
+
     update: function(){
       this.game.physics.arcade.collide(player, ground);
+      this.game.physics.arcade.collide(player, platforms);
       this.game.physics.arcade.collide(spikeTraps, ground);
       this.game.physics.arcade.overlap(player, records, this.collectRecord, null, this);
+
       player.body.velocity.x = 0;
       if(cursors.left.isDown){
         player.body.velocity.x = -150;
@@ -84,7 +94,6 @@
         player.body.velocity.y = -400;
       }
       player.body.gravity.y = 1000;
-
     },
 
     moveItems: function(){
@@ -96,7 +105,6 @@
           spikeTrap.body.velocity.x += 100;
         }else if(direction === 0){
           spikeTrap.body.velocity.x -= 100;
-          spikeTrap.scale.x = 1;
         }
       }, this);
     },
