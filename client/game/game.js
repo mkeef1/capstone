@@ -5,7 +5,7 @@
   Game.play = function(){
   };
 
-  var map, player, cursors, sky, ground, records, spikes, score, spikeTraps, platforms, farBackground1;
+  var map, player, cursors, sky, ground, records, spikes, score, spikeTraps, platforms, farBackground, trees;
 
   Game.play.prototype = {
     preload: function(){
@@ -13,22 +13,27 @@
       this.game.load.spritesheet('record', '/assets/record.png', 32, 32);
       this.game.load.tilemap('map', '/assets/lv1.json', null, Phaser.Tilemap.TILED_JSON);
       this.game.load.image('Tiles_32x32', '/assets/Tiles_32x32.png');
-      this.game.load.image('sky', '/assets/presents1.jpg');
+      this.game.load.image('sky', '/assets/sunset.jpg');
       this.game.load.image('spike', '/assets/SteelspikeUp.png');
       this.game.load.image('spikeTrap', '/assets/SpikeGroundTrap.png');
       this.game.load.image('bck_hill_9', '/assets/bck_hill_9.png');
+      this.game.load.image('tree2', '/assets/cl2_gearTree_01.png');
+      this.game.load.image('tree1', '/assets/rev0718_cl2_gearTree_02.png');
     },
     create: function(){
       this.game.physics.startSystem(Phaser.Physics.ARCADE);
       map = this.game.add.tilemap('map');
       map.addTilesetImage('Tiles_32x32');
       map.addTilesetImage('bck_hill_9');
+      map.addTilesetImage('tree1');
+      map.addTilesetImage('tree2');
       sky = this.game.add.tileSprite(0, 0, 900, 600, 'sky');
       sky.fixedToCamera = true;
       map.setCollisionByExclusion([]);
 
 
-      farBackground1 = map.createLayer('FarBackground');
+      farBackground = map.createLayer('FarBackground');
+      trees = map.createLayer('Trees');
       // farBackground2.scrollFactorX = -0.5;
       ground = map.createLayer('Ground');
       ground.resizeWorld();
