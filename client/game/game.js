@@ -5,38 +5,35 @@
   Game.play = function(){
   };
 
-  var map, player, cursors, sky, ground, records, spikes, score, spikeTraps, platforms, farBackground1, farBackground2;
+  var map, player, cursors, sky, ground, records, spikes, score, spikeTraps, platforms, farBackground1;
 
   Game.play.prototype = {
     preload: function(){
       this.game.load.spritesheet('quasrun', '/assets/quasrun.png', 128, 128);
       this.game.load.spritesheet('record', '/assets/record.png', 32, 32);
       this.game.load.tilemap('map', '/assets/lv1.json', null, Phaser.Tilemap.TILED_JSON);
-      this.game.load.image('minicular', '/assets/minicular.png');
+      this.game.load.image('Tiles_32x32', '/assets/Tiles_32x32.png');
       this.game.load.image('sky', '/assets/presents1.jpg');
       this.game.load.image('spike', '/assets/SteelspikeUp.png');
       this.game.load.image('spikeTrap', '/assets/SpikeGroundTrap.png');
-      this.game.load.image('bck_hill_9', '/assets/background/Far/used/bck_hill_9.png');
-      this.game.load.image('bck_hill_10', '/assets/background/Far/used/bck_hill_10.png');
+      this.game.load.image('bck_hill_9', '/assets/bck_hill_9.png');
     },
     create: function(){
       this.game.physics.startSystem(Phaser.Physics.ARCADE);
       map = this.game.add.tilemap('map');
-      map.addTilesetImage('minicular');
-      map.addTilesetImage('bck_hill_10');
+      map.addTilesetImage('Tiles_32x32');
       map.addTilesetImage('bck_hill_9');
       sky = this.game.add.tileSprite(0, 0, 900, 600, 'sky');
       sky.fixedToCamera = true;
       map.setCollisionByExclusion([]);
 
 
-      farBackground1 = map.createLayer('FarBackground1');
-      farBackground2 = map.createLayer('FarBackground2');
+      farBackground1 = map.createLayer('FarBackground');
       // farBackground2.scrollFactorX = -0.5;
       ground = map.createLayer('Ground');
       ground.resizeWorld();
 
-      player = this.game.add.sprite(600, 550, 'quasrun');
+      player = this.game.add.sprite(600, 450, 'quasrun');
       this.game.physics.arcade.enable(player);
       player.anchor.setTo(0.5, 0.5);
       player.body.setSize(30, 73);
