@@ -5,7 +5,7 @@
   Game.play = function(){
   };
 
-  var map, player, cursors, sky, ground, records, spikes, score, spikeTraps, platforms, farBackground, trees, emitter,
+  var map, player, cursors, sky, ground, records, spikes, score, spikeTraps, farBackground, trees, emitter,
   scoreText, style, door;
 
   Game.play.prototype = {
@@ -33,16 +33,16 @@
       map.addTilesetImage('tree2');
       sky = this.game.add.tileSprite(0, 0, 900, 600, 'sky');
       sky.fixedToCamera = true;
-      map.setCollisionByExclusion([]);
+      map.setCollision(228);
+      map.setCollision(222);
 
 
       farBackground = map.createLayer('FarBackground');
       trees = map.createLayer('Trees');
-      // farBackground2.scrollFactorX = -0.5;
       ground = map.createLayer('Ground');
       ground.resizeWorld();
 
-      player = this.game.add.sprite(200, 490, 'quasrun');
+      player = this.game.add.sprite(4500, 10, 'quasrun');
       this.game.physics.arcade.enable(player);
       player.anchor.setTo(0.5, 0.5);
       player.body.setSize(30, 73);
@@ -55,9 +55,6 @@
       player.body.gravity.y = 1000;
 
       cursors = this.game.input.keyboard.createCursorKeys();
-
-      platforms = this.game.add.group();
-      platforms.enableBody = true;
 
       records = this.game.add.group();
       records.name = 'records';
@@ -72,6 +69,7 @@
       spikeTraps.enableBody = true;
 
       door = this.game.add.group();
+      door.name = 'door';
       door.enableBody = true;
 
       this.moveTimer = this.game.time.events.loop(1500, this.moveItems, this);
@@ -97,7 +95,6 @@
 
     update: function(){
       this.game.physics.arcade.collide(player, ground);
-      this.game.physics.arcade.collide(player, platforms);
       this.game.physics.arcade.collide(spikeTraps, ground);
       this.game.physics.arcade.overlap(player, records, this.collectRecord, null, this);
       this.game.physics.arcade.overlap(player, spikes, this.hurtPlayer, null, this);
@@ -125,11 +122,16 @@
 
     nextLevel: function(){
       this.game.state.start('menu');
+      spikes.destroy();
+      records.destroy();
+      spikeTraps.destroy();
+      sky.destroy();
+      door.destroy();
+      emitter.destroy();
     },
 
     hurtPlayer: function(player, spikes){
-      if(!player.invincible){
-        // spikes.body.immovable = true;
+      if(!player.invincible && score > 0){
         emitter.x = player.x;
         emitter.y = player.y;
         emitter.gravity = 0;
@@ -140,6 +142,9 @@
         scoreText.setText('Score: ' + score);
         this.toggleInvincible();
         this.time.events.add(2000, this.toggleInvincible, this);
+      }
+      if(!player.invincible && score === 0){
+        this.game.state.restart(true, false);
       }
     },
 
@@ -161,7 +166,7 @@
     },
 
     collectRecord: function(player, record){
-      record.kill();
+      record.destroy();
       score += 10;
       scoreText.setText('Score: ' + score);
       console.log('score', score);
@@ -169,8 +174,6 @@
     },
 
     render: function(){
-      this.game.debug.text(this.game.time.fps || '--', 2, 14, '#00ff00');
-      // this.game.debug.body(player);
     }
   };
 
