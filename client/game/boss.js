@@ -13,7 +13,7 @@
       this.game.time.advancedTiming = true;
       this.game.load.spritesheet('quasrun', '/assets/quasrun.png', 128, 128);
       this.game.load.spritesheet('record', '/assets/record.png', 32, 32);
-      this.game.load.spritesheet('face', '/assets/face3.png', 613, 540);
+      this.game.load.spritesheet('face', '/assets/newface.png', 602, 539);
       this.game.load.spritesheet('fire', '/assets/fire2.png', 128, 128);
       this.game.load.tilemap('map', '/assets/lv2.json', null, Phaser.Tilemap.TILED_JSON);
       this.game.load.image('Tiles_32x32', '/assets/Tiles_32x32.png');
