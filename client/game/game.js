@@ -54,6 +54,7 @@
       player.body.velocity.x = 0;
       player.body.gravity.y = 1000;
 
+
       cursors = this.game.input.keyboard.createCursorKeys();
 
       records = this.game.add.group();

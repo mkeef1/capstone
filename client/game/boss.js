@@ -6,14 +6,15 @@
   };
 
   var map, player, cursors, sky, ground, records, spikes, score, spikeTraps, farBackground, trees, emitter, face,
-  scoreText, style, door;
+  scoreText, style, door, fireBall;
 
   Game.boss.prototype = {
     preload: function(){
       this.game.time.advancedTiming = true;
       this.game.load.spritesheet('quasrun', '/assets/quasrun.png', 128, 128);
       this.game.load.spritesheet('record', '/assets/record.png', 32, 32);
-      this.game.load.spritesheet('face', '/assets/face2.png', 613, 540);
+      this.game.load.spritesheet('face', '/assets/face3.png', 613, 540);
+      this.game.load.spritesheet('fire', '/assets/fire2.png', 128, 128);
       this.game.load.tilemap('map', '/assets/lv2.json', null, Phaser.Tilemap.TILED_JSON);
       this.game.load.image('Tiles_32x32', '/assets/Tiles_32x32.png');
       this.game.load.image('sky', '/assets/sunset.jpg');
@@ -40,17 +41,22 @@
       ground = map.createLayer('Ground');
       ground.resizeWorld();
 
-      player = this.game.add.sprite(400, 10, 'quasrun');
+      player = this.game.add.sprite(800, 10, 'quasrun');
       this.game.physics.arcade.enable(player);
       player.anchor.setTo(0.5, 0.5);
       player.body.setSize(30, 73);
       player.scale.setTo(1, 1);
-
       this.game.camera.follow(player);
       player.body.collideWorldBounds = true;
       player.animations.add('walk', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 10, true);
       player.body.velocity.x = 0;
       player.body.gravity.y = 1000;
+
+      fireBall = this.game.add.sprite(700, 50, 'fire');
+      this.game.physics.arcade.enable(fireBall);
+      fireBall.body.velocity.x = -100;
+      fireBall.animations.add('flame', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 10, true);
+      fireBall.animations.play('flame');
 
       cursors = this.game.input.keyboard.createCursorKeys();
 
@@ -58,18 +64,23 @@
       records.name = 'records';
       records.enableBody = true;
 
-      face = this.game.add.group();
-      face.name = 'face';
-      face.enableBody = true;
+      face = this.game.add.sprite(1300, 300, 'face');
+      this.game.physics.arcade.enable(face);
+      face.animations.add('blink', [0, 1], 10, true);
+      face.anchor.setTo(0.5, 0.5);
+      face.scale.setTo(0.5, 0.5);
+      face.animations.play('blink');
+
+      // video = this.game.add.group();
+      // video.name = 'video';
+      // video.enableBody = true;
+
 
 
       // this.moveTimer = this.game.time.events.loop(1500, this.moveItems, this);
 
-      map.createFromObjects('Face', 346, 'face', 0, true, false, face);
       map.createFromObjects('Records', 345, 'record', 0, true, false, records);
-
-      face.callAll('animations.add', 'animations', 'blink', [0, 1], 10, true);
-      face.callAll('animations.play', 'animations', 'blink');
+      map.createFromObjects('Video', 344, 'record', 0, true, false);
 
       records.callAll('animations.add', 'animations', 'spin', [0, 1, 2, 3, 4, 5], 2, true);
       records.callAll('animations.play', 'animations', 'spin');
@@ -86,6 +97,7 @@
     update: function(){
       this.game.physics.arcade.collide(player, ground);
       this.game.physics.arcade.overlap(player, records, this.collectRecord, null, this);
+      // this.game.physics.arcade.overlap(player, video, this.play, null, this);
 
       if(cursors.left.isDown){
         player.body.velocity.x = -150;
@@ -104,8 +116,24 @@
       if(cursors.up.isDown && player.body.onFloor()){
         player.body.velocity.y = -400;
       }
-
     },
+
+    shoot: function(){
+    },
+    // play: function(player, video){
+    //   video.play();
+    // },
+
+    // pause: function(video){
+    //   video.pause();
+    // },
+
+    // playVid: function(player, video){
+    //   window.quasVidPlay();
+    // },
+    // pause: function(video){
+    //   video.pause();
+    // },
 
     nextLevel: function(){
       this.game.state.start('menu');
@@ -144,10 +172,10 @@
       score += 10;
       scoreText.setText('Score: ' + score);
       console.log('score', score);
-
     },
 
     render: function(){
+      this.game.debug.body(face);
     }
   };
 
