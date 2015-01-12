@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="57" height="20" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="bck_hill_9" tilewidth="32" tileheight="32">
+  <image source="bck_hill_9.png" width="480" height="320"/>
+ </tileset>
+ <tileset firstgid="151" name="cl2_gearTree_01" tilewidth="32" tileheight="32">
+  <image source="cl2_gearTree_01.png" width="288" height="320"/>
+ </tileset>
+ <tileset firstgid="241" name="rev0718_cl2_gearTree_02" tilewidth="32" tileheight="32">
+  <image source="rev0718_cl2_gearTree_02.png" width="192" height="224"/>
+ </tileset>
+ <tileset firstgid="283" name="Tiles_32x32" tilewidth="32" tileheight="32">
+  <image source="Tiles_32x32.png" width="256" height="256"/>
+ </tileset>
+ <layer name="Ground" width="57" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztw0EJAAAIBDDN4cP+LcUaxwarAgAAAN50/jXiAc47FH0=
+  </data>
+ </layer>
+ <layer name="Background" width="57" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzty2c3FmAAgOG3pBJSUWkoGkhURBJFaBdaSGgaSaUlMqIpJWT83q6/0MfnnOc+5/p4JxKxWCwWi/1fa1hLEutIZj0b2EgKm0gljXQ2kxHQu4WtbCOTLLazg51ks4vd7GEvOewL6N1PLnkc4CCHOEw+BRRyhCKOUkxJQO8xjnOCUso4STkVnKKS01RxhmpqAnrPco5a6jhPPQ00coGLXOIyV7jKtYDe69ygiWZauMktbnOHu7TSRjv36AjovU8nXXTzgIc84jFPeEoPvfTRz7OA3gGeM8gLXvKKIV7zhre84z3DfGAkoHeUj4wxzgSTfGKKaT7zha984zs/Anpn+Mksv/jNHH+YZ4FF/rLEMiusBvTGYqH0D5VEp2g=
+  </data>
+ </layer>
+ <layer name="Trees" width="57" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztzjVvhDEQhOG7MPN/DzMzMzMzMyd1mOF1a33Fym4u0Y78FJZWowmFNBqNRqPR2MlFHvJRgEIUoRglKP0HvWUoRwUqUYVq1KAWdY5bIqm3Hg1oRBOa0YJWtKHdcUsk9XagE13oRg960Yd+DFj3d7jHAx7xhGfHXmmXz16TQQxhGCMYxRjGMYFJ6/4Fr3jDOz7w6dgr7fLZazKFacxgFnOYxwIWsWTdf+EbP+YT5iEq7NYr7fLZa7KMFaxiDevYwCa2sG3dR7MhBrGIQzwSAnZJeqVdPntNdrCLPezjAIc4wjFOrPtENiQhGSlIRVrALkmvtMtnr8kpznCOC1ziCte4wa11n86GDGQiC9nICdgl6ZV2+ezVaP5SfgHH09Qs
+  </data>
+ </layer>
+ <objectgroup name="Face">
+  <object gid="346" x="736" y="320"/>
+ </objectgroup>
+ <objectgroup name="Records">
+  <object gid="345" x="64" y="448"/>
+  <object gid="345" x="128" y="448"/>
+  <object gid="345" x="224" y="448"/>
+ </objectgroup>
+</map>

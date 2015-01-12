@@ -8,7 +8,8 @@
       window.game = new Phaser.Game(900, 600, Phaser.CANVAS, 'game');
       window.game.state.add('menu', Game.menu);
       window.game.state.add('game', Game.play);
-      window.game.state.start('game');
+      window.game.state.add('boss', Game.boss);
+      window.game.state.start('boss');
 
       $scope.logout = function(){
         User.logout().then(function(){
