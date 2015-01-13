@@ -22,6 +22,7 @@
       this.game.load.image('tree2', '/assets/cl2_gearTree_01.png');
       this.game.load.image('tree1', '/assets/rev0718_cl2_gearTree_02.png');
       this.game.load.image('door', '/assets/door.png');
+      this.game.load.audio('lv1', '/assets/09. Quasimoto - Come On Feet.mp3');
     },
 
     create: function(){
@@ -42,7 +43,7 @@
       ground = map.createLayer('Ground');
       ground.resizeWorld();
 
-      player = this.game.add.sprite(4500, 10, 'quasrun');
+      player = this.game.add.sprite(30, 500, 'quasrun');
       this.game.physics.arcade.enable(player);
       player.anchor.setTo(0.5, 0.5);
       player.body.setSize(30, 73);
@@ -92,6 +93,9 @@
 
       emitter = this.game.add.emitter(0, 0, 100);
       emitter.makeParticles('record');
+
+      this.gameSound = this.game.add.audio('lv1');
+      this.gameSound.play();
     },
 
     update: function(){
@@ -122,7 +126,7 @@
     },
 
     nextLevel: function(){
-      this.game.state.start('menu');
+      this.game.state.start('boss');
       spikes.destroy();
       records.destroy();
       spikeTraps.destroy();

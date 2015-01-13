@@ -24,6 +24,7 @@
       this.game.load.image('bck_hill_9', '/assets/bck_hill_9.png');
       this.game.load.image('cl2_gearTree_01', '/assets/cl2_gearTree_01.png');
       this.game.load.image('rev0718_cl2_gearTree_02', '/assets/rev0718_cl2_gearTree_02.png');
+      this.game.load.audio('boss', '/assets/08 - Funky Blue Note.mp3');
     },
 
     create: function(){
@@ -101,6 +102,9 @@
 
       emitter = this.game.add.emitter(0, 0, 100);
       emitter.makeParticles('record');
+
+      this.gameSound = this.game.add.audio('boss');
+      this.gameSound.play();
     },
 
     update: function(){
@@ -254,7 +258,7 @@
       fireBall.width = 32;
       fireBall.height = 70;
       fireBall.rotation = this.game.physics.arcade.angleBetween(fireBall, player);
-      this.game.physics.arcade.accelerateToObject(fireBall, player, 60, 100, 100);
+      this.game.physics.arcade.accelerateToObject(fireBall, player, 60, 150, 150);
       fireBall.anchor.setTo(0.2, 0.5);
       fireBall.scale.x = -1;
       fireBall.animations.add('flame', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 10, true);
@@ -283,7 +287,7 @@
       this.game.physics.arcade.enable(fireBall);
       fireBalls.add(fireBall);
       fireBall.rotation = this.game.physics.arcade.angleToXY(fireBall, 900, 100);
-      this.game.physics.arcade.accelerateToXY(fireBall, 500, 150, 200, 200);
+      this.game.physics.arcade.accelerateToXY(fireBall, 500, 150, 220, 220);
       fireBall.anchor.setTo(0.2, 0.5);
       fireBall.body.setSize(70, 32);
       fireBall.width = 32;
@@ -297,7 +301,7 @@
       this.game.physics.arcade.enable(fireBall2);
       fireBalls.add(fireBall2);
       fireBall2.rotation = this.game.physics.arcade.angleToXY(fireBall, 1100, 500);
-      this.game.physics.arcade.accelerateToXY(fireBall2, 500, 500, 200, 200);
+      this.game.physics.arcade.accelerateToXY(fireBall2, 500, 500, 220, 220);
       fireBall2.anchor.setTo(0.2, 0.5);
       fireBall2.body.setSize(70, 32);
       fireBall2.width = 32;
