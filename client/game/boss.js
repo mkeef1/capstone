@@ -6,7 +6,7 @@
   };
 
   var map, player, cursors, sky, ground, records, spikes, score, spikeTraps, farBackground, trees, emitter, face,
-  scoreText, style, door, fireBalls, fireBall, fireBall2, boss, savior;
+  scoreText, style, door, fireBalls, fireBall, fireBall2, boss, savior, brick, spaceKey, brickTime;
 
   Game.boss.prototype = {
     preload: function(){
@@ -15,8 +15,10 @@
       this.game.load.spritesheet('record', '/assets/record.png', 32, 32);
       this.game.load.spritesheet('face', '/assets/newface.png', 602, 539);
       this.game.load.spritesheet('fire', '/assets/fire2.png', 128, 128);
+      this.game.load.spritesheet('brickSheet', '/assets/blah.png', 152, 152);
       this.game.load.tilemap('map', '/assets/lv2.json', null, Phaser.Tilemap.TILED_JSON);
       this.game.load.image('Tiles_32x32', '/assets/Tiles_32x32.png');
+      this.game.load.image('brick', '/assets/redbrick.png');
       this.game.load.image('sky', '/assets/sunset.jpg');
       this.game.load.image('bck_hill_9', '/assets/bck_hill_9.png');
       this.game.load.image('cl2_gearTree_01', '/assets/cl2_gearTree_01.png');
@@ -34,6 +36,8 @@
       sky.fixedToCamera = true;
       map.setCollisionByExclusion([]);
       // map.setCollision(287);
+
+      brickTime = 0;
 
 
       farBackground = map.createLayer('Background');
@@ -57,7 +61,13 @@
       boss.animations.add('spin', [0, 1, 2, 3, 4, 5], 2, true);
       boss.animations.play('spin');
 
+
       cursors = this.game.input.keyboard.createCursorKeys();
+
+      spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+      // this.game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
+      spaceKey.onDown.add(this.throwBrick, this);
 
       records = this.game.add.group();
       records.name = 'records';
@@ -123,6 +133,29 @@
       }
       if(cursors.up.isDown && player.body.onFloor()){
         player.body.velocity.y = -400;
+      }
+    },
+
+
+
+    killBrick: function(){
+      brick.destroy();
+      brick.alive = false;
+    },
+
+
+    throwBrick: function(){
+      if(brickTime < this.game.time.now){
+        brickTime = this.game.time.now + 3000;
+        brick = this.game.add.sprite(player.body.x, player.body.y, 'brickSheet');
+        brick.animations.add('turn', [0, 2, 1, 2], 10, true);
+        brick.animations.play('turn');
+        this.game.physics.arcade.enable(brick);
+        brick.scale.setTo(0.2, 0.2);
+        // brick.body.rotation = 90;
+        // brick = this.game.physics.arcade.accelerationFromRotation(0, 200, brick.body.velocity);
+        brick.anchor.setTo(0.5, 0.5);
+        brick.body.velocity.x = 170;
       }
     },
 
