@@ -6,7 +6,8 @@
   };
 
   var map, player, cursors, sky, ground, records, spikes, score, spikeTraps, farBackground, trees, emitter, face,
-  scoreText, style, door, fireBalls, fireBall, fireBall2, boss, savior, savior1, brick, spaceKey, brickTime;
+  scoreText, style, door, fireBalls, fireBall, fireBall2, boss, savior, savior1, brick, spaceKey, brickTime, bricks,
+  faceHealth;
 
   Game.boss.prototype = {
     preload: function(){
@@ -37,6 +38,7 @@
       map.setCollisionByExclusion([]);
 
       brickTime = 0;
+      faceHealth = 100;
 
 
       farBackground = map.createLayer('Background');
@@ -60,6 +62,18 @@
       boss.animations.add('spin', [0, 1, 2, 3, 4, 5], 2, true);
       boss.animations.play('spin');
 
+      bricks = this.game.add.group();
+      bricks.name = 'bricks';
+      bricks.enableBody = true;
+
+      // brick = this.game.add.sprite(player.body.x + 15, player.body.y + 32, 'brickSheet');
+      // this.game.physics.arcade.enable(brick);
+      // bricks.add(brick);
+      // brick.animations.add('turn', [0, 2, 1, 2], 10, true);
+      // // brick.animations.play('turn');
+      // brick.scale.setTo(0.2, 0.2);
+      // brick.anchor.setTo(0.5, 0.5);
+      // brick.body.velocity.x = 180;
 
       cursors = this.game.input.keyboard.createCursorKeys();
 
@@ -74,12 +88,8 @@
       fireBalls = this.game.add.group();
       fireBalls.name = 'fireBalls';
       fireBalls.enableBody = true;
-      // fireBalls.physicsBodyType = Phaser.Physics.ARCADE;
-
-      // face.animations.play('blink');
 
       map.createFromObjects('Records', 345, 'record', 0, true, false, records);
-      // map.createFromObjects('Video', 344, 'record', 0, true, false);
 
       records.callAll('animations.add', 'animations', 'spin', [0, 1, 2, 3, 4, 5], 2, true);
       records.callAll('animations.play', 'animations', 'spin');
@@ -99,6 +109,7 @@
       this.game.physics.arcade.overlap(player, boss, this.boss, null, this);
       this.game.physics.arcade.overlap(player, savior, this.collectSavior, null, this);
       this.game.physics.arcade.overlap(player, savior1, this.collectSavior1, null, this);
+      this.game.physics.arcade.overlap(bricks, face, this.hurtFace, null, this);
       // this.game.physics.arcade.overlap(player, fireBalls, this.hurtPlayer, null, this);
 
       if(cursors.left.isDown){
@@ -119,6 +130,7 @@
         player.body.velocity.y = -400;
       }
     },
+
 
     startTimers: function(){
       this.createSaviors();
@@ -146,9 +158,30 @@
       this.time.events.add(1200, this.moveFaceBack, this);
     },
 
+    // freakOut2: function(){
+    //   face.animations.play('blink');
+    //   this.game.add.tween(face).to({x: 1405}, 10, Phaser.Easing.Linear.None)
+    //   .to({y: 218}, 10, Phaser.Easing.Linear.None)
+    //   .to({x: 140}, 10, Phaser.Easing.Linear.None)
+    //   .to({y: 213}, 10, Phaser.Easing.Linear.None)
+    //   .to({x: 1405}, 10, Phaser.Easing.Linear.None)
+    //   .repeatAll(15)
+    //   .start();
+    //   this.time.events.add(1200, this.stopBlink, this);
+    // },
+
+    // resetTimers: function(){
+    //   face.animations.stop('blink', true);
+    //   this.shotTimer.reset();
+    //   this.powershotTimer.reset();
+    //   this.pauseTimer.reset();
+    //   this.saviorTimer.reset();
+    //   this.startTimers();
+    // },
+
     moveFaceBack: function(){
-      face.animations.stop('blink');
-      face.frame = 0;
+      face.animations.stop('blink', true);
+      // face.frame = 0;
       this.game.add.tween(face).to({x: 1410}, 2000, Phaser.Easing.Linear.None, true);
       this.time.events.add(2000, this.startTimers, this);
     },
@@ -157,12 +190,13 @@
       if(brickTime < this.game.time.now){
         brickTime = this.game.time.now + 3000;
         brick = this.game.add.sprite(player.body.x + 15, player.body.y + 32, 'brickSheet');
+        this.game.physics.arcade.enable(brick);
+        bricks.add(brick);
         brick.animations.add('turn', [0, 2, 1, 2], 10, true);
         brick.animations.play('turn');
-        this.game.physics.arcade.enable(brick);
         brick.scale.setTo(0.2, 0.2);
         brick.anchor.setTo(0.5, 0.5);
-        brick.body.velocity.x = 220;
+        brick.body.velocity.x = 180;
       }
     },
 
@@ -200,6 +234,7 @@
       score += 10;
       face = this.game.add.sprite(1700, 213, 'face');
       this.game.physics.arcade.enable(face);
+      // face.health = 100;
       face.animations.add('blink', [0, 1], 10, true);
       face.anchor.setTo(0.3, 0.35);
       face.body.setSize(100, 150);
@@ -208,8 +243,6 @@
       this.game.camera.unfollow(player);
       this.game.camera.unfollow(scoreText);
       this.game.world.setBounds(scoreText.x - 16, scoreText.y - 40, 790, 600);
-      // this.createSaviors();
-      // this.startTimers();
       this.moveFace();
     },
 
@@ -233,6 +266,12 @@
     powerUp: function(){
       face.animations.play('blink');
       this.time.events.add(4000, this.toggleTimers, this);
+      this.toggleFaceInvincible();
+      this.time.events.add(4000, this.toggleFaceInvincible, this);
+    },
+
+    toggleFaceInvincible: function(){
+      face.invincible = !face.invincible;
     },
 
     toggleTimers: function(){
@@ -278,6 +317,17 @@
       sky.destroy();
       door.destroy();
       emitter.destroy();
+    },
+
+    hurtFace: function(brick, face){
+      if(!face.invincible && faceHealth === 100){
+        // this.freakOut2();
+        faceHealth -= 50;
+        // face.animations.stop('blink');
+      }
+      if(!face.invincible && faceHealth === 0){
+        this.game.state.restart(true, false);
+      }
     },
 
     hurtPlayer: function(player, fireBall){
