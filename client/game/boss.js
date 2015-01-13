@@ -6,7 +6,7 @@
   };
 
   var map, player, cursors, sky, ground, records, spikes, score, spikeTraps, farBackground, trees, emitter, face,
-  scoreText, style, door, fireBalls, fireBall, fireBall2, boss, savior, brick, spaceKey, brickTime;
+  scoreText, style, door, fireBalls, fireBall, fireBall2, boss, savior, savior1, brick, spaceKey, brickTime;
 
   Game.boss.prototype = {
     preload: function(){
@@ -35,7 +35,6 @@
       sky = this.game.add.tileSprite(0, 0, 900, 600, 'sky');
       sky.fixedToCamera = true;
       map.setCollisionByExclusion([]);
-      // map.setCollision(287);
 
       brickTime = 0;
 
@@ -66,16 +65,11 @@
 
       spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
-      // this.game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
       spaceKey.onDown.add(this.throwBrick, this);
 
       records = this.game.add.group();
       records.name = 'records';
       records.enableBody = true;
-
-      // video = this.game.add.group();
-      // video.name = 'video';
-      // video.enableBody = true;
 
       fireBalls = this.game.add.group();
       fireBalls.name = 'fireBalls';
@@ -105,8 +99,9 @@
       emitter.makeParticles('record');
 
       this.shotTimer = this.game.time.events.loop(4000, this.shoot, this);
-      this.powershotTimer = this.game.time.events.loop(12000, this.powerShot, this);
+      this.powershotTimer = this.game.time.events.loop(2000, this.powerShot, this);
       this.pauseTimer = this.game.time.events.loop(15000, this.powerUp, this);
+      this.saviorTimer = this.game.time.events.loop(10000, this.createSaviors, this);
 
       this.createSaviors();
     },
@@ -116,6 +111,7 @@
       this.game.physics.arcade.overlap(player, records, this.collectRecord, null, this);
       this.game.physics.arcade.overlap(player, boss, this.boss, null, this);
       this.game.physics.arcade.overlap(player, savior, this.collectSavior, null, this);
+      this.game.physics.arcade.overlap(player, savior1, this.collectSavior1, null, this);
 
       if(cursors.left.isDown){
         player.body.velocity.x = -150;
@@ -147,41 +143,45 @@
     throwBrick: function(){
       if(brickTime < this.game.time.now){
         brickTime = this.game.time.now + 3000;
-        brick = this.game.add.sprite(player.body.x, player.body.y, 'brickSheet');
+        brick = this.game.add.sprite(player.body.x + 15, player.body.y + 32, 'brickSheet');
         brick.animations.add('turn', [0, 2, 1, 2], 10, true);
         brick.animations.play('turn');
         this.game.physics.arcade.enable(brick);
         brick.scale.setTo(0.2, 0.2);
-        // brick.body.rotation = 90;
-        // brick = this.game.physics.arcade.accelerationFromRotation(0, 200, brick.body.velocity);
         brick.anchor.setTo(0.5, 0.5);
-        brick.body.velocity.x = 170;
+        brick.body.velocity.x = 220;
       }
     },
 
     createSaviors: function(){
-      savior = this.game.add.sprite(1055, 100, 'record');
-      this.game.physics.arcade.enable(savior);
-      savior.animations.add('spin', [0, 1, 2, 3, 4, 5], 2, true);
-      savior.animations.play('spin');
-      savior.body.velocity.y = 60;
-      savior.outOfBoundsKill = true;
+      savior1 = this.game.add.sprite(800, 100, 'record');
+      this.game.physics.arcade.enable(savior1);
+      savior1.animations.add('spin', [0, 1, 2, 3, 4, 5], 2, true);
+      savior1.animations.play('spin');
+      savior1.body.velocity.y = 60;
+      savior1.checkWorldBounds = true;
+      savior1.outOfBoundsKill = true;
 
-      savior = this.game.add.sprite(800, 100, 'record');
+      savior = this.game.add.sprite(1055, 100, 'record');
       savior.game.physics.arcade.enable(savior);
       savior.animations.add('spin', [0, 1, 2, 3, 4, 5], 2, true);
       savior.animations.play('spin');
       savior.body.velocity.y = 60;
+      savior.checkWorldBounds = true;
       savior.outOfBoundsKill = true;
     },
 
-    collectSavior: function(){
+    collectSavior: function(player, savior){
       score += 10;
       savior.destroy();
       scoreText.setText('Score: ' + score);
-      this.createSaviors();
     },
 
+    collectSavior1: function(player, savior1){
+      score += 10;
+      savior1.destroy();
+      scoreText.setText('Score: ' + score);
+    },
     boss: function(){
       score += 10;
       boss.destroy();
@@ -197,11 +197,12 @@
       fireBall.width = 32;
       fireBall.height = 70;
       fireBall.rotation = this.game.physics.arcade.angleBetween(fireBall, player);
-      this.game.physics.arcade.accelerateToObject(fireBall, player, 300, 800, 800);
+      this.game.physics.arcade.accelerateToObject(fireBall, player, 60, 100, 100);
       fireBall.anchor.setTo(0.2, 0.5);
       fireBall.scale.x = -1;
       fireBall.animations.add('flame', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 10, true);
       fireBall.animations.play('flame');
+      fireBall.checkWorldBounds = true;
       fireBall.outOfBoundsKill = true;
     },
 
@@ -218,7 +219,7 @@
       fireBall = this.game.add.sprite(face.body.x - 130, face.body.y + 295, 'fire');
       this.game.physics.arcade.enable(fireBall);
       fireBall.rotation = this.game.physics.arcade.angleToXY(fireBall, 900, 100);
-      this.game.physics.arcade.accelerateToXY(fireBall, 900, 100, 800, 800);
+      this.game.physics.arcade.accelerateToXY(fireBall, 500, 150, 200, 200);
       fireBall.anchor.setTo(0.2, 0.5);
       fireBall.body.setSize(70, 32);
       fireBall.width = 32;
@@ -226,11 +227,12 @@
       fireBall.scale.x = -1;
       fireBall.animations.add('flame', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 10, true);
       fireBall.animations.play('flame');
+      fireBall.checkWorldBounds = true;
       fireBall.outOfBoundsKill = true;
       fireBall2 = this.game.add.sprite(face.body.x - 130, face.body.y + 295, 'fire');
       this.game.physics.arcade.enable(fireBall2);
       fireBall2.rotation = this.game.physics.arcade.angleToXY(fireBall, 1100, 500);
-      this.game.physics.arcade.accelerateToXY(fireBall2, 1100, 500, 800, 800);
+      this.game.physics.arcade.accelerateToXY(fireBall2, 500, 500, 200, 200);
       fireBall2.anchor.setTo(0.2, 0.5);
       fireBall2.body.setSize(70, 32);
       fireBall2.width = 32;
@@ -238,6 +240,7 @@
       fireBall2.scale.x = -1;
       fireBall2.animations.add('flame', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 10, true);
       fireBall2.animations.play('flame');
+      fireBall2.checkWorldBounds = true;
       fireBall2.outOfBoundsKill = true;
     },
 
