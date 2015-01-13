@@ -110,7 +110,7 @@
       this.game.physics.arcade.overlap(player, savior, this.collectSavior, null, this);
       this.game.physics.arcade.overlap(player, savior1, this.collectSavior1, null, this);
       this.game.physics.arcade.overlap(bricks, face, this.hurtFace, null, this);
-      // this.game.physics.arcade.overlap(player, fireBalls, this.hurtPlayer, null, this);
+      this.game.physics.arcade.overlap(player, fireBalls, this.hurtPlayer, null, this);
 
       if(cursors.left.isDown){
         player.body.velocity.x = -150;
@@ -158,17 +158,17 @@
       this.time.events.add(1200, this.moveFaceBack, this);
     },
 
-    // freakOut2: function(){
-    //   face.animations.play('blink');
-    //   this.game.add.tween(face).to({x: 1405}, 10, Phaser.Easing.Linear.None)
-    //   .to({y: 218}, 10, Phaser.Easing.Linear.None)
-    //   .to({x: 140}, 10, Phaser.Easing.Linear.None)
-    //   .to({y: 213}, 10, Phaser.Easing.Linear.None)
-    //   .to({x: 1405}, 10, Phaser.Easing.Linear.None)
-    //   .repeatAll(15)
-    //   .start();
-    //   this.time.events.add(1200, this.stopBlink, this);
-    // },
+    freakOut2: function(){
+      face.animations.play('blink');
+      this.game.add.tween(face).to({x: 1405}, 10, Phaser.Easing.Linear.None)
+      .to({y: 218}, 10, Phaser.Easing.Linear.None)
+      .to({x: 140}, 10, Phaser.Easing.Linear.None)
+      .to({y: 213}, 10, Phaser.Easing.Linear.None)
+      .to({x: 1405}, 10, Phaser.Easing.Linear.None)
+      .repeatAll(15)
+      .start();
+      this.time.events.add(1200, this.toggleTimers, this);
+    },
 
     // resetTimers: function(){
     //   face.animations.stop('blink', true);
@@ -234,7 +234,7 @@
       score += 10;
       face = this.game.add.sprite(1700, 213, 'face');
       this.game.physics.arcade.enable(face);
-      // face.health = 100;
+
       face.animations.add('blink', [0, 1], 10, true);
       face.anchor.setTo(0.3, 0.35);
       face.body.setSize(100, 150);
@@ -320,13 +320,13 @@
     },
 
     hurtFace: function(brick, face){
-      if(!face.invincible && faceHealth === 100){
-        // this.freakOut2();
-        faceHealth -= 50;
+      if(!face.invincible){
+        this.freakOut2();
+        // faceHealth -= 70;
         // face.animations.stop('blink');
-      }
-      if(!face.invincible && faceHealth === 0){
-        this.game.state.restart(true, false);
+      // }
+      // if(!face.invincible && faceHealth < 40){
+      //   this.game.state.restart(true, false);
       }
     },
 
