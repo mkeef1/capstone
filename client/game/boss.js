@@ -6,7 +6,7 @@
   };
 
   var map, player, cursors, sky, ground, records, spikes, score, spikeTraps, farBackground, trees, emitter, face,
-  scoreText, style, door, fireBalls, fireBall, fireBall2, boss;
+  scoreText, style, door, fireBalls, fireBall, fireBall2, boss, savior;
 
   Game.boss.prototype = {
     preload: function(){
@@ -52,7 +52,6 @@
       player.body.velocity.x = 0;
       player.body.gravity.y = 1000;
 
-
       boss = this.game.add.sprite(1100, 300, 'record');
       this.game.physics.arcade.enable(boss);
       boss.animations.add('spin', [0, 1, 2, 3, 4, 5], 2, true);
@@ -95,17 +94,18 @@
       emitter = this.game.add.emitter(0, 0, 100);
       emitter.makeParticles('record');
 
-
       this.shotTimer = this.game.time.events.loop(4000, this.shoot, this);
       this.powershotTimer = this.game.time.events.loop(12000, this.powerShot, this);
       this.pauseTimer = this.game.time.events.loop(15000, this.powerUp, this);
 
+      this.createSaviors();
     },
 
     update: function(){
       this.game.physics.arcade.collide(player, ground);
       this.game.physics.arcade.overlap(player, records, this.collectRecord, null, this);
       this.game.physics.arcade.overlap(player, boss, this.boss, null, this);
+      this.game.physics.arcade.overlap(player, savior, this.collectSavior, null, this);
 
       if(cursors.left.isDown){
         player.body.velocity.x = -150;
@@ -124,6 +124,29 @@
       if(cursors.up.isDown && player.body.onFloor()){
         player.body.velocity.y = -400;
       }
+    },
+
+    createSaviors: function(){
+      savior = this.game.add.sprite(1055, 100, 'record');
+      this.game.physics.arcade.enable(savior);
+      savior.animations.add('spin', [0, 1, 2, 3, 4, 5], 2, true);
+      savior.animations.play('spin');
+      savior.body.velocity.y = 60;
+      savior.outOfBoundsKill = true;
+
+      savior = this.game.add.sprite(800, 100, 'record');
+      savior.game.physics.arcade.enable(savior);
+      savior.animations.add('spin', [0, 1, 2, 3, 4, 5], 2, true);
+      savior.animations.play('spin');
+      savior.body.velocity.y = 60;
+      savior.outOfBoundsKill = true;
+    },
+
+    collectSavior: function(){
+      score += 10;
+      savior.destroy();
+      scoreText.setText('Score: ' + score);
+      this.createSaviors();
     },
 
     boss: function(){
@@ -221,7 +244,6 @@
       record.destroy();
       score += 10;
       scoreText.setText('Score: ' + score);
-      console.log('score', score);
     },
 
     render: function(){
