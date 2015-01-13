@@ -32,8 +32,8 @@
       map.addTilesetImage('rev0718_cl2_gearTree_02');
       sky = this.game.add.tileSprite(0, 0, 900, 600, 'sky');
       sky.fixedToCamera = true;
-      map.setCollision(283);
-      // map.setCollision(222);
+      map.setCollisionByExclusion([]);
+      // map.setCollision(287);
 
 
       farBackground = map.createLayer('Background');
@@ -53,7 +53,7 @@
       player.body.gravity.y = 1000;
 
 
-      boss = this.game.add.sprite(1100, 500, 'record');
+      boss = this.game.add.sprite(1100, 300, 'record');
       this.game.physics.arcade.enable(boss);
       boss.animations.add('spin', [0, 1, 2, 3, 4, 5], 2, true);
       boss.animations.play('spin');
