@@ -6,7 +6,7 @@
   };
 
   var map, player, cursors, sky, ground, records, spikes, score, spikeTraps, farBackground, trees, emitter, face,
-  scoreText, style, door, fireBalls, fireBall;
+  scoreText, style, door, fireBalls, fireBall, fireBall2, boss;
 
   Game.boss.prototype = {
     preload: function(){
@@ -41,7 +41,7 @@
       ground = map.createLayer('Ground');
       ground.resizeWorld();
 
-      player = this.game.add.sprite(850, 400, 'quasrun');
+      player = this.game.add.sprite(200, 400, 'quasrun');
       this.game.physics.arcade.enable(player);
       player.anchor.setTo(0.5, 0.5);
       player.body.setSize(30, 73);
@@ -53,26 +53,36 @@
       player.body.gravity.y = 1000;
 
 
+      boss = this.game.add.sprite(1100, 500, 'record');
+      this.game.physics.arcade.enable(boss);
+      boss.animations.add('spin', [0, 1, 2, 3, 4, 5], 2, true);
+      boss.animations.play('spin');
+
       cursors = this.game.input.keyboard.createCursorKeys();
 
       records = this.game.add.group();
       records.name = 'records';
       records.enableBody = true;
 
+      // video = this.game.add.group();
+      // video.name = 'video';
+      // video.enableBody = true;
+
       fireBalls = this.game.add.group();
       fireBalls.name = 'fireBalls';
       fireBalls.enableBody = true;
       fireBalls.physicsBodyType = Phaser.Physics.ARCADE;
 
-      face = this.game.add.sprite(1300, 275, 'face');
+      face = this.game.add.sprite(1480, 213, 'face');
       this.game.physics.arcade.enable(face);
       face.animations.add('blink', [0, 1], 10, true);
-      face.anchor.setTo(0.5, 0.5);
-      face.body.setSize(100, 100);
-      face.animations.play('blink');
+      face.anchor.setTo(0.3, 0.35);
+      face.body.setSize(100, 150);
+      face.scale.setTo(1, 0.95);
+      // face.animations.play('blink');
 
       map.createFromObjects('Records', 345, 'record', 0, true, false, records);
-      map.createFromObjects('Video', 344, 'record', 0, true, false);
+      // map.createFromObjects('Video', 344, 'record', 0, true, false);
 
       records.callAll('animations.add', 'animations', 'spin', [0, 1, 2, 3, 4, 5], 2, true);
       records.callAll('animations.play', 'animations', 'spin');
@@ -85,13 +95,17 @@
       emitter = this.game.add.emitter(0, 0, 100);
       emitter.makeParticles('record');
 
+
       this.shotTimer = this.game.time.events.loop(4000, this.shoot, this);
+      this.powershotTimer = this.game.time.events.loop(12000, this.powerShot, this);
+      this.pauseTimer = this.game.time.events.loop(15000, this.powerUp, this);
+
     },
 
     update: function(){
       this.game.physics.arcade.collide(player, ground);
       this.game.physics.arcade.overlap(player, records, this.collectRecord, null, this);
-      // this.game.physics.arcade.overlap(player, video, this.play, null, this);
+      this.game.physics.arcade.overlap(player, boss, this.boss, null, this);
 
       if(cursors.left.isDown){
         player.body.velocity.x = -150;
@@ -112,14 +126,63 @@
       }
     },
 
+    boss: function(){
+      score += 10;
+      boss.destroy();
+      this.game.camera.unfollow(player);
+      this.game.camera.unfollow(scoreText);
+      this.game.world.setBounds(scoreText.x - 16, scoreText.y - 40, 790, 600);
+    },
+
     shoot: function(){
-      fireBall = this.game.add.sprite(face.body.x - 200, face.body.y + 150, 'fire');
+      fireBall = this.game.add.sprite(face.body.x - 130, face.body.y + 295, 'fire');
       this.game.physics.arcade.enable(fireBall);
+      fireBall.body.setSize(70, 32);
+      fireBall.width = 32;
+      fireBall.height = 70;
+      fireBall.rotation = this.game.physics.arcade.angleBetween(fireBall, player);
       this.game.physics.arcade.accelerateToObject(fireBall, player, 300, 800, 800);
-      fireBall.anchor.setTo(0.5, 0.5);
+      fireBall.anchor.setTo(0.2, 0.5);
+      fireBall.scale.x = -1;
       fireBall.animations.add('flame', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 10, true);
       fireBall.animations.play('flame');
       fireBall.outOfBoundsKill = true;
+    },
+
+    powerUp: function(){
+      face.animations.play('blink');
+      this.time.events.add(4000, this.toggleTimers, this);
+    },
+
+    toggleTimers: function(){
+      face.animations.stop('blink', true);
+    },
+
+    powerShot: function(){
+      fireBall = this.game.add.sprite(face.body.x - 130, face.body.y + 295, 'fire');
+      this.game.physics.arcade.enable(fireBall);
+      fireBall.rotation = this.game.physics.arcade.angleToXY(fireBall, 900, 100);
+      this.game.physics.arcade.accelerateToXY(fireBall, 900, 100, 800, 800);
+      fireBall.anchor.setTo(0.2, 0.5);
+      fireBall.body.setSize(70, 32);
+      fireBall.width = 32;
+      fireBall.height = 70;
+      fireBall.scale.x = -1;
+      fireBall.animations.add('flame', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 10, true);
+      fireBall.animations.play('flame');
+      fireBall.outOfBoundsKill = true;
+      fireBall2 = this.game.add.sprite(face.body.x - 130, face.body.y + 295, 'fire');
+      this.game.physics.arcade.enable(fireBall2);
+      fireBall2.rotation = this.game.physics.arcade.angleToXY(fireBall, 1100, 500);
+      this.game.physics.arcade.accelerateToXY(fireBall2, 1100, 500, 800, 800);
+      fireBall2.anchor.setTo(0.2, 0.5);
+      fireBall2.body.setSize(70, 32);
+      fireBall2.width = 32;
+      fireBall2.height = 70;
+      fireBall2.scale.x = -1;
+      fireBall2.animations.add('flame', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 10, true);
+      fireBall2.animations.play('flame');
+      fireBall2.outOfBoundsKill = true;
     },
 
     nextLevel: function(){
@@ -165,5 +228,4 @@
       this.game.debug.body(face);
     }
   };
-
 })();
