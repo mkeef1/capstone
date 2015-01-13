@@ -74,14 +74,8 @@
       fireBalls = this.game.add.group();
       fireBalls.name = 'fireBalls';
       fireBalls.enableBody = true;
-      fireBalls.physicsBodyType = Phaser.Physics.ARCADE;
+      // fireBalls.physicsBodyType = Phaser.Physics.ARCADE;
 
-      face = this.game.add.sprite(1480, 213, 'face');
-      this.game.physics.arcade.enable(face);
-      face.animations.add('blink', [0, 1], 10, true);
-      face.anchor.setTo(0.3, 0.35);
-      face.body.setSize(100, 150);
-      face.scale.setTo(1, 0.95);
       // face.animations.play('blink');
 
       map.createFromObjects('Records', 345, 'record', 0, true, false, records);
@@ -97,13 +91,6 @@
 
       emitter = this.game.add.emitter(0, 0, 100);
       emitter.makeParticles('record');
-
-      this.shotTimer = this.game.time.events.loop(4000, this.shoot, this);
-      this.powershotTimer = this.game.time.events.loop(2000, this.powerShot, this);
-      this.pauseTimer = this.game.time.events.loop(15000, this.powerUp, this);
-      this.saviorTimer = this.game.time.events.loop(10000, this.createSaviors, this);
-
-      this.createSaviors();
     },
 
     update: function(){
@@ -112,6 +99,7 @@
       this.game.physics.arcade.overlap(player, boss, this.boss, null, this);
       this.game.physics.arcade.overlap(player, savior, this.collectSavior, null, this);
       this.game.physics.arcade.overlap(player, savior1, this.collectSavior1, null, this);
+      // this.game.physics.arcade.overlap(player, fireBalls, this.hurtPlayer, null, this);
 
       if(cursors.left.isDown){
         player.body.velocity.x = -150;
@@ -132,13 +120,38 @@
       }
     },
 
-
-
-    killBrick: function(){
-      brick.destroy();
-      brick.alive = false;
+    startTimers: function(){
+      this.createSaviors();
+      this.shotTimer = this.game.time.events.loop(4000, this.shoot, this);
+      this.powershotTimer = this.game.time.events.loop(12000, this.powerShot, this);
+      this.pauseTimer = this.game.time.events.loop(15000, this.powerUp, this);
+      this.saviorTimer = this.game.time.events.loop(10000, this.createSaviors, this);
     },
 
+
+    moveFace: function(){
+      this.game.add.tween(face).to({x: 1300}, 2000, Phaser.Easing.Linear.None, true);
+      this.time.events.add(2000, this.freakOut, this);
+    },
+
+    freakOut: function(){
+      face.animations.play('blink');
+      this.game.add.tween(face).to({x: 1305}, 10, Phaser.Easing.Linear.None)
+      .to({y: 218}, 10, Phaser.Easing.Linear.None)
+      .to({x: 1305}, 10, Phaser.Easing.Linear.None)
+      .to({y: 213}, 10, Phaser.Easing.Linear.None)
+      .to({x: 1300}, 10, Phaser.Easing.Linear.None)
+      .repeatAll(15)
+      .start();
+      this.time.events.add(1200, this.moveFaceBack, this);
+    },
+
+    moveFaceBack: function(){
+      face.animations.stop('blink');
+      face.frame = 0;
+      this.game.add.tween(face).to({x: 1410}, 2000, Phaser.Easing.Linear.None, true);
+      this.time.events.add(2000, this.startTimers, this);
+    },
 
     throwBrick: function(){
       if(brickTime < this.game.time.now){
@@ -182,17 +195,28 @@
       savior1.destroy();
       scoreText.setText('Score: ' + score);
     },
+
     boss: function(){
       score += 10;
+      face = this.game.add.sprite(1700, 213, 'face');
+      this.game.physics.arcade.enable(face);
+      face.animations.add('blink', [0, 1], 10, true);
+      face.anchor.setTo(0.3, 0.35);
+      face.body.setSize(100, 150);
+      face.scale.setTo(1, 0.95);
       boss.destroy();
       this.game.camera.unfollow(player);
       this.game.camera.unfollow(scoreText);
       this.game.world.setBounds(scoreText.x - 16, scoreText.y - 40, 790, 600);
+      // this.createSaviors();
+      // this.startTimers();
+      this.moveFace();
     },
 
     shoot: function(){
       fireBall = this.game.add.sprite(face.body.x - 130, face.body.y + 295, 'fire');
       this.game.physics.arcade.enable(fireBall);
+      fireBalls.add(fireBall);
       fireBall.body.setSize(70, 32);
       fireBall.width = 32;
       fireBall.height = 70;
@@ -218,6 +242,7 @@
     powerShot: function(){
       fireBall = this.game.add.sprite(face.body.x - 130, face.body.y + 295, 'fire');
       this.game.physics.arcade.enable(fireBall);
+      fireBalls.add(fireBall);
       fireBall.rotation = this.game.physics.arcade.angleToXY(fireBall, 900, 100);
       this.game.physics.arcade.accelerateToXY(fireBall, 500, 150, 200, 200);
       fireBall.anchor.setTo(0.2, 0.5);
@@ -231,6 +256,7 @@
       fireBall.outOfBoundsKill = true;
       fireBall2 = this.game.add.sprite(face.body.x - 130, face.body.y + 295, 'fire');
       this.game.physics.arcade.enable(fireBall2);
+      fireBalls.add(fireBall2);
       fireBall2.rotation = this.game.physics.arcade.angleToXY(fireBall, 1100, 500);
       this.game.physics.arcade.accelerateToXY(fireBall2, 500, 500, 200, 200);
       fireBall2.anchor.setTo(0.2, 0.5);
@@ -254,7 +280,7 @@
       emitter.destroy();
     },
 
-    hurtPlayer: function(player, spikes){
+    hurtPlayer: function(player, fireBall){
       if(!player.invincible && score > 0){
         emitter.x = player.x;
         emitter.y = player.y;
@@ -283,7 +309,7 @@
     },
 
     render: function(){
-      this.game.debug.body(face);
+      // this.game.debug.body(face);
     }
   };
 })();
