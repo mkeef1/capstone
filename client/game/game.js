@@ -6,7 +6,7 @@
   };
 
   var map, player, cursors, sky, ground, records, spikes, score, spikeTraps, farBackground, trees, emitter,
-  scoreText, style, door;
+  scoreText, style, door, gameSound;
 
   Game.play.prototype = {
     preload: function(){
@@ -94,8 +94,8 @@
       emitter = this.game.add.emitter(0, 0, 100);
       emitter.makeParticles('record');
 
-      this.gameSound = this.game.add.audio('lv1');
-      this.gameSound.play();
+      gameSound = this.game.add.audio('lv1');
+      gameSound.play();
     },
 
     update: function(){
@@ -133,6 +133,7 @@
       sky.destroy();
       door.destroy();
       emitter.destroy();
+      gameSound.stop();
     },
 
     hurtPlayer: function(player, spikes){
