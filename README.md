@@ -3,43 +3,15 @@ Lord Quas!
 ### Code Badges
 
 ### Screenshots
-![Image1]()
-![Image2](https://raw.githubusercontent.com/nss-cohort-2014-06-07/express-template/master/docs/screenshots/two.jpg)
+![Image1](https://raw.githubusercontent.com/mkeef1/capstone/master/client/assets/gameShot1.png)
+![Image2](https://raw.githubusercontent.com/mkeef1/capstone/master/client/assets/gameShot2.png)
 
 ### Description
-write a description about your project
+Quasimoto, a.k.a Lord Quas, has been turned into a video game character.  Help him extend his record collection and defeat the Fantastic Planet face.  Features music by Quasimoto and Madlib.
 
-### Models
-```
-Model 1
-```
+Use arrow keys to move.  Spacebar to throw a brick on boss level.
 
-```
-Model 2
-```
-
-### Database
-```
-Collecion 1
-```
-
-```
-Collection 2
-```
 
 ### Features
-- [x] Feature 1
-- [ ] Feature 2
-- [x] Feature 3
-
-### Running Tests
-```bash
-$ npm install
-$ npm test
-```
-
-### Contributors
-- [Chyld Medford](https://github.com/chyld)
-
-### License
-[MIT](LICENSE)
+- [x] MAHN stack. MongoDB, AngluarJS, hapi.js, Node.js
+- [x] Phaser
