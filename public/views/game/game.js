@@ -10,7 +10,7 @@
       window.game.state.add('game', Game.play);
       window.game.state.add('boss', Game.boss);
       // window.game.state.add('video', Game.video);
-      window.game.state.start('boss');
+      window.game.state.start('menu');
       // var quasVid = document.getElementById('video');
 
       $scope.logout = function(){

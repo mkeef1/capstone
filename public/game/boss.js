@@ -114,7 +114,7 @@
       this.game.physics.arcade.overlap(player, savior, this.collectSavior, null, this);
       this.game.physics.arcade.overlap(player, savior1, this.collectSavior1, null, this);
       this.game.physics.arcade.overlap(bricks, face, this.hurtFace, null, this);
-      // this.game.physics.arcade.overlap(player, fireBalls, this.hurtPlayer, null, this);
+      this.game.physics.arcade.overlap(player, fireBalls, this.hurtPlayer, null, this);
 
       if(cursors.left.isDown){
         player.body.velocity.x = -150;
