@@ -1,6 +1,4 @@
-Lord Quas!
-## name of project
-### Code Badges
+## The Adventures of Quasimoto
 
 ### Screenshots
 ![Image1](https://raw.githubusercontent.com/mkeef1/capstone/master/client/assets/gameShot1.png)
