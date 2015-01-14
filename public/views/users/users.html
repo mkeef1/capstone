@@ -1,0 +1,28 @@
+
+<h1>{{mode | lowercase}}</h1>
+<div class="row">
+  <div class="small-12 columns">
+    <form>
+      <div class="row">
+        <div class="small-6 columns">
+          <label for="username">Username</label>
+          <input id="username" type="text" name="username" ng-model="user.username" autofocus>
+        </div>
+        <div class="small-6 columns"></div>
+      </div>
+      <div class="row">
+        <div class="small-6 columns">
+          <label for="password">Password</label>
+          <input id="password" type="password" name="password" ng-model="user.password">
+        </div>
+        <div class="small-6 columns"></div>
+      </div>
+      <div class="row">
+        <div class="small-6 columns">
+          <button ng-click="submit()">Submit</button>
+        </div>
+        <div class="small-6 columns"></div>
+      </div>
+    </form>
+  </div>
+</div>

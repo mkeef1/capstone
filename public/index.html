@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html ng-app="game" lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Adventures of Lord Quas</title>
+    <link rel="stylesheet" href="/vendor/foundation/css/normalize.css">
+    <link rel="stylesheet" href="/vendor/foundation/css/foundation.css">
+    <script src="/vendor/foundation/js/vendor/modernizr.js"></script>
+  </head>
+  <body>
+    <div class="row">
+      <div class="small-12 columns">
+        <div ui-view></div>
+      </div>
+    </div>
+    <script src="/vendor/bower_components/angular/angular.min.js"></script>
+    <script src="/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="/vendor/foundation/js/foundation.min.js"></script>
+    <script src="/vendor/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="/phaser-arcade-physics.min.js"></script>
+    <script src="/index.js"></script>
+    <script src="/game/menu.js"></script>
+    <script src="/game/game.js"></script>
+    <script src="/game/boss.js"></script>
+    <script src="/game/video.js"></script>
+    <script src="/game/video.js"></script>
+    <script src="/factories/user.js"></script>
+    <script src="/views/users/users.js"></script>
+    <script src="/views/game/game.js"></script>
+    <script>$(document).foundation();</script>
+  </body>
+</html>
